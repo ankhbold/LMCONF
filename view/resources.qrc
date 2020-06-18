@@ -1,7 +1,7 @@
 <RCC>
   <qresource prefix="/plugins/lmconf">
-    <file alias="crops.png">icons/crops.png</file>
+    <file alias="network.png">icons/network.png</file>
     <file alias="certf.png">icons/certf.png</file>
-    <file alias="certf.png">icons/navigator.png</file>
+    <file alias="navigator.png">icons/navigator.png</file>
   </qresource>
 </RCC>

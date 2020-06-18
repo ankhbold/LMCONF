@@ -6,7 +6,7 @@ from PyQt4.QtGui import *
 from PyQt4.QtXml import *
 from qgis.core import *
 from inspect import currentframe
-from ..view.Ui_SesmimFirstDialog import *
+from ..view.Ui_ConnectDialog import Ui_ConnectDialog
 from sqlalchemy.exc import DatabaseError, SQLAlchemyError
 
 from datetime import timedelta, datetime
@@ -18,11 +18,16 @@ import sys
 import win32wnet
 import qgis.core
 
-class SesmimFirstDialog(QDialog, Ui_SesmimFirstDialog):
+class ConnectDialog(QDialog, Ui_ConnectDialog):
 
     def __init__(self, iface, parent=None):
 
-        super(SesmimFirstDialog,  self).__init__(parent)
+        super(ConnectDialog,  self).__init__(parent)
         self.setupUi(self)
         self.iface = iface
         self.setWindowTitle(self.tr("Sesmim first dialog"))
+
+    @pyqtSlot()
+    def on_connect_button_clicked(self):
+
+        self.reject()

@@ -6,9 +6,10 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from PyQt4.QtXml import *
 from qgis.core import *
-from controller.SesmimFirstDialog import *
+from controller.ConnectDialog import *
 from controller.SesmimSecondDialog import *
 from controller.NavigatorWidget import *
+from model.DialogInspector import DialogInspector
 
 from view.resources_rc import *
 import qgis.core
@@ -32,26 +33,25 @@ class LMConf:
         self.navigatorWidget = None
 
         # Create action that will start plugin configuration
-        self.sesmim_first_action = QAction(QIcon(":/plugins/lmconf/crops.png"), QApplication.translate("Plugin", "LMCONF first dialog"), self.iface.mainWindow())
+        self.connect_action = QAction(QIcon(":/plugins/lmconf/network.png"), QApplication.translate("Plugin", "LMCONF first dialog"), self.iface.mainWindow())
         self.sesmim_second_action = QAction(QIcon(":/plugins/lmconf/certf.png"), QApplication.translate("Plugin", "LMCONF second dialog"), self.iface.mainWindow())
         self.navigator_action = QAction(QIcon(":/plugins/lmconf/navigator.png"),
                                         QApplication.translate("Plugin", "Show/Hide Navigator"),
                                         self.iface.mainWindow())
-        self.navigator_action.setCheckable(True)
+        self.navigator_action.setCheckable(False)
+        self.navigator_action.setEnabled(False)
         # connect the action to the run method
-        self.sesmim_first_action.triggered.connect(self.__show_fist_dialog)
+        self.connect_action.triggered.connect(self.__show_connect_dialog)
         self.sesmim_second_action.triggered.connect(self.__show_second_dialog)
 
-        self.__create_navigator()
         self.navigator_action.triggered.connect(self.__show_navigator_widget)
 
         # self.reports_action.triggered.connect(self.__show_reports_dialog)
 
-
         # Add toolbar button and menu item
         self.lm_toolbar = self.iface.addToolBar(QApplication.translate("Plugin", "LMCONF porject"))
 
-        self.lm_toolbar.addAction(self.sesmim_first_action)
+        self.lm_toolbar.addAction(self.connect_action)
         self.lm_toolbar.addAction(self.sesmim_second_action)
         self.lm_toolbar.addAction(self.navigator_action)
 
@@ -65,13 +65,13 @@ class LMConf:
         menu_bar.addMenu(self.lm_menu)
 
         self.lm_menu.addAction(self.navigator_action)
-        self.lm_menu.addAction(self.sesmim_first_action)
+        self.lm_menu.addAction(self.connect_action)
         self.lm_menu.addSeparator()
         self.lm_menu.addAction(self.sesmim_second_action)
 
     def unload(self):
 
-        self.iface.removePluginMenu(QApplication.translate("Plugin", "&LMCONF"), self.sesmim_first_action)
+        self.iface.removePluginMenu(QApplication.translate("Plugin", "&LMCONF"), self.connect_action)
         self.iface.removePluginMenu(QApplication.translate("Plugin", "&LMCONF"), self.sesmim_second_action)
         self.iface.removePluginMenu(QApplication.translate("Plugin", "&LMCONF"), self.navigator_action)
 
@@ -81,9 +81,12 @@ class LMConf:
             self.iface.removeDockWidget(self.navigatorWidget)
             del self.navigatorWidget
 
+    def on_current_dialog_rejected(self):
+
+        DialogInspector().set_dialog_visible(False)
+
     def __show_navigator_widget(self):
 
-        print 'ddddd'
         if self.navigatorWidget != None:
             if self.navigatorWidget.isVisible():
                 if self.navigatorWidget:
@@ -92,11 +95,13 @@ class LMConf:
                 if self.navigatorWidget:
                     self.navigatorWidget.show()
 
-    def __show_fist_dialog(self):
+    def __show_connect_dialog(self):
 
-        print "-test sesmim plugin 1-"
-        dlg = SesmimFirstDialog(self.iface, self.iface.mainWindow())
+        dlg = ConnectDialog(self.iface, self.iface.mainWindow())
+        DialogInspector().set_dialog_visible(True)
+        # dlg.rejected.connect(self.on_current_dialog_rejected)
         dlg.exec_()
+        self.__set_menu_visibility()
 
     def __show_second_dialog(self):
 
@@ -123,3 +128,14 @@ class LMConf:
             self.navigator_action.setChecked(True)
         else:
             self.navigator_action.setChecked(False)
+
+    def __set_menu_visibility(self):
+
+
+        self.__enable_menu()
+
+        self.__create_navigator()
+
+    def __enable_menu(self):
+
+        self.navigator_action.setEnabled(True)
