@@ -249,6 +249,29 @@ font: 75 14pt &quot;Helvetica&quot;;</string>
        <string>LOAD</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="find_data_button">
+      <property name="geometry">
+       <rect>
+        <x>316</x>
+        <y>130</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>FIND</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="find_value_edit">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>131</y>
+        <width>291</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>

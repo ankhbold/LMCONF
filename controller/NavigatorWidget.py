@@ -194,3 +194,16 @@ class NavigatorWidget(QDockWidget, Ui_NavigatorWidget):
                     if val is not None:
                         item = QTableWidgetItem(unicode(val))
                         self.exc_twidget.setItem(self.exc_twidget.rowCount() - 1, y, item)
+
+    @pyqtSlot()
+    def on_find_data_button_clicked(self):
+
+        my_search_value = self.find_value_edit.text()
+        for row in xrange(self.exc_twidget.rowCount()):
+            for column in xrange(self.exc_twidget.columnCount()):
+                item = self.exc_twidget.item(row, column)
+                if item and item.data(Qt.DisplayRole) == my_search_value:
+                    print item.text()
+                    print self.exc_twidget.indexFromItem(item)
+                    # return self.exc_twidget.indexFromItem(item)
+        # return None

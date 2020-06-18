@@ -104,6 +104,12 @@ class Ui_NavigatorWidget(object):
         self.load_data_button = QtGui.QPushButton(self.scrollAreaWidgetContents)
         self.load_data_button.setGeometry(QtCore.QRect(316, 100, 75, 23))
         self.load_data_button.setObjectName(_fromUtf8("load_data_button"))
+        self.find_data_button = QtGui.QPushButton(self.scrollAreaWidgetContents)
+        self.find_data_button.setGeometry(QtCore.QRect(316, 130, 75, 23))
+        self.find_data_button.setObjectName(_fromUtf8("find_data_button"))
+        self.find_value_edit = QtGui.QLineEdit(self.scrollAreaWidgetContents)
+        self.find_value_edit.setGeometry(QtCore.QRect(10, 131, 291, 20))
+        self.find_value_edit.setObjectName(_fromUtf8("find_value_edit"))
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         NavigatorWidget.setWidget(self.dockWidgetContents)
 
@@ -117,4 +123,5 @@ class Ui_NavigatorWidget(object):
         self.label_2.setText(_translate("NavigatorWidget", "data row", None))
         self.label_3.setText(_translate("NavigatorWidget", "data column", None))
         self.load_data_button.setText(_translate("NavigatorWidget", "LOAD", None))
+        self.find_data_button.setText(_translate("NavigatorWidget", "FIND", None))
 
