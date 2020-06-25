@@ -125,7 +125,10 @@ class NavigatorWidget(QDockWidget, Ui_NavigatorWidget):
         self.plugin.iface.addVectorLayer(
             'http://egazar.gov.mn:8060/api/geo/json/parcel/by/soum?soum_code' + '=' + str(self.au2_code),
             u'Нэгж талбар', 'ogr')
-
+        self.plugin.iface.addVectorLayer(
+            'http://egazar.gov.mn:8060/api/geo/json/parcel/detail/by/soum?soum_code' + '=' + str(self.au2_code) + '&type=possession',
+            u'Нэгж талбар', 'ogr')
+        print 'http://egazar.gov.mn:8060/api/geo/json/parcel/detail/by/soum?soum_code' + '=' + str(self.au2_code) + '&type=possession',
         self.plugin.iface.addVectorLayer(
             'http://egazar.gov.mn:8060/api/geo/json/building/by/soum?soum_code' + '=' + str(self.au2_code),
             u'Барилга', 'ogr')
